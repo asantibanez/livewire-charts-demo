@@ -44,4 +44,11 @@
             :line-chart-model="$lineChartModel"
         />
     </div>
+
+    <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
+        <livewire:livewire-area-chart
+            key="{{ $areaChartModel->reactiveKey() }}"
+            :area-chart-model="$areaChartModel"
+        />
+    </div>
 </div>

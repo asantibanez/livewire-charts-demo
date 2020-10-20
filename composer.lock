@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a332954dd4b0774ff2b51c5bcf83a51",
+    "content-hash": "e040bb6afaceaee578e0b0a35e7fda4f",
     "packages": [
         {
             "name": "asantibanez/livewire-charts",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/asantibanez/livewire-charts.git",
-                "reference": "8752a7eff0eed32b7fffa2b2ab8ee6298b45b678"
+                "reference": "e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asantibanez/livewire-charts/zipball/8752a7eff0eed32b7fffa2b2ab8ee6298b45b678",
-                "reference": "8752a7eff0eed32b7fffa2b2ab8ee6298b45b678",
+                "url": "https://api.github.com/repos/asantibanez/livewire-charts/zipball/e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889",
+                "reference": "e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +62,7 @@
                 "asantibanez",
                 "livewire-charts"
             ],
-            "time": "2020-10-19T18:17:37+00:00"
+            "time": "2020-10-20T15:46:59+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -5111,16 +5111,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "fa50d9db1c0c2fae99cf988d27023effda5524a3"
+                "reference": "2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/fa50d9db1c0c2fae99cf988d27023effda5524a3",
-                "reference": "fa50d9db1c0c2fae99cf988d27023effda5524a3",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8",
+                "reference": "2ec31f3adc54c71a59c5e3c2143d7a0e2f8899f8",
                 "shasum": ""
             },
             "require": {
@@ -5168,7 +5168,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2020-10-17T09:00:00+00:00"
+            "time": "2020-10-20T12:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",

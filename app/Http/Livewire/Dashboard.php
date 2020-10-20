@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Expense;
+use Asantibanez\LivewireCharts\Models\AreaChartModel;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
@@ -92,6 +93,18 @@ class Dashboard extends Component
                 ->withOnPointClickEvent('onPointClick')
             );
 
+        $areaChartModel = $expenses
+            ->reduce(function (AreaChartModel $areaChartModel, $data) use ($expenses) {
+                return $areaChartModel->addPoint($data->description, $data->amount, ['id' => $data->id]);
+            }, (new AreaChartModel())
+                ->setTitle('Expenses Peaks')
+                ->setAnimated($this->firstRun)
+                ->setColor('#f6ad55')
+                ->withOnPointClickEvent('onAreaPointClick')
+                ->setXAxisVisible(false)
+                ->setYAxisVisible(true)
+            );
+
         $this->firstRun = false;
 
         return view('livewire.dashboard')
@@ -99,6 +112,7 @@ class Dashboard extends Component
                 'columnChartModel' => $columnChartModel,
                 'pieChartModel' => $pieChartModel,
                 'lineChartModel' => $lineChartModel,
+                'areaChartModel' => $areaChartModel,
             ]);
     }
 }
