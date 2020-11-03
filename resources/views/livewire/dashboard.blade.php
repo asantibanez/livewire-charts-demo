@@ -22,6 +22,11 @@
         </li>
     </ul>
 
+    <div>
+        <input type="checkbox" value="other" wire:model="showDataLabels"/>
+        <span>Show data labels</span>
+    </div>
+
     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
         <div class="shadow rounded p-4 border bg-white flex-1" style="height: 32rem;">
             <livewire:livewire-column-chart
@@ -49,6 +54,13 @@
         <livewire:livewire-area-chart
             key="{{ $areaChartModel->reactiveKey() }}"
             :area-chart-model="$areaChartModel"
+        />
+    </div>
+
+    <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
+        <livewire:livewire-line-chart
+            key="{{ $multiLineChartModel->reactiveKey() }}"
+            :line-chart-model="$multiLineChartModel"
         />
     </div>
 </div>

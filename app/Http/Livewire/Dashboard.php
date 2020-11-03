@@ -23,6 +23,8 @@ class Dashboard extends Component
 
     public $firstRun = true;
 
+    public $showDataLabels = false;
+
     protected $listeners = [
         'onPointClick' => 'handleOnPointClick',
         'onSliceClick' => 'handleOnSliceClick',
@@ -58,6 +60,8 @@ class Dashboard extends Component
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
                 ->withOnColumnClickEventName('onColumnClick')
+                ->setLegendVisibility(false)
+                ->setDataLabelsEnabled($this->showDataLabels)
             );
 
         $pieChartModel = $expenses->groupBy('type')
@@ -70,6 +74,9 @@ class Dashboard extends Component
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
                 ->withOnSliceClickEvent('onSliceClick')
+                ->legendPositionBottom()
+                ->legendHorizontallyAlignedCenter()
+                ->setDataLabelsEnabled($this->showDataLabels)
             );
 
         $lineChartModel = $expenses
@@ -86,11 +93,14 @@ class Dashboard extends Component
                     $lineChartModel->addMarker(12, $amountSum);
                 }
 
-                return $lineChartModel->addPoint($index, $amountSum, ['id' => $data->id]);
+                return $lineChartModel->addPoint($index, $data->amount, ['id' => $data->id]);
             }, (new LineChartModel())
                 ->setTitle('Expenses Evolution')
                 ->setAnimated($this->firstRun)
                 ->withOnPointClickEvent('onPointClick')
+                ->setSmoothCurve()
+                ->setXAxisVisible(false)
+                ->setDataLabelsEnabled($this->showDataLabels)
             );
 
         $areaChartModel = $expenses
@@ -101,8 +111,21 @@ class Dashboard extends Component
                 ->setAnimated($this->firstRun)
                 ->setColor('#f6ad55')
                 ->withOnPointClickEvent('onAreaPointClick')
+                ->setDataLabelsEnabled($this->showDataLabels)
                 ->setXAxisVisible(false)
-                ->setYAxisVisible(true)
+            );
+
+        $multiLineChartModel = $expenses
+            ->reduce(function (LineChartModel $multiLineChartModel, $data) use ($expenses) {
+                return $multiLineChartModel
+                    ->addSeriesPoint($data->type, $data->description, $data->amount,  ['id' => $data->id]);
+            }, (new LineChartModel())
+                ->setTitle('Expenses by Type')
+                ->setAnimated($this->firstRun)
+                ->withOnPointClickEvent('onPointClick')
+                ->setSmoothCurve()
+                ->multiLine()
+                ->setDataLabelsEnabled($this->showDataLabels)
             );
 
         $this->firstRun = false;
@@ -113,6 +136,7 @@ class Dashboard extends Component
                 'pieChartModel' => $pieChartModel,
                 'lineChartModel' => $lineChartModel,
                 'areaChartModel' => $areaChartModel,
+                'multiLineChartModel' => $multiLineChartModel,
             ]);
     }
 }

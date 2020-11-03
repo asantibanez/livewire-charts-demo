@@ -4,21 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e040bb6afaceaee578e0b0a35e7fda4f",
+    "content-hash": "d7da43ea466ee27eaca6089b0865a2c5",
     "packages": [
         {
             "name": "asantibanez/livewire-charts",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/asantibanez/livewire-charts.git",
-                "reference": "e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/asantibanez/livewire-charts/zipball/e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889",
-                "reference": "e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889",
-                "shasum": ""
+                "type": "path",
+                "url": "../../packages/livewire-charts",
+                "reference": "e8003a33bde3ca1b8f9a067eb4eed1b6f07dd889"
             },
             "require": {
                 "illuminate/support": "^7.0|^8.0",
@@ -45,7 +39,19 @@
                     "Asantibanez\\LivewireCharts\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Asantibanez\\LivewireCharts\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "test-coverage": [
+                    "vendor/bin/phpunit --coverage-html coverage"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -62,7 +68,9 @@
                 "asantibanez",
                 "livewire-charts"
             ],
-            "time": "2020-10-20T15:46:59+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "asm89/stack-cors",
@@ -7255,12 +7263,14 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "asantibanez/livewire-charts": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
