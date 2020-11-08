@@ -99,26 +99,29 @@ class Dashboard extends Component
                 ->setAnimated($this->firstRun)
                 ->withOnPointClickEvent('onPointClick')
                 ->setSmoothCurve()
-                ->setXAxisVisible(false)
+                ->setXAxisVisible(true)
                 ->setDataLabelsEnabled($this->showDataLabels)
             );
 
         $areaChartModel = $expenses
             ->reduce(function (AreaChartModel $areaChartModel, $data) use ($expenses) {
-                return $areaChartModel->addPoint($data->description, $data->amount, ['id' => $data->id]);
+                $index = $expenses->search($data);
+                return $areaChartModel->addPoint($index, $data->amount, ['id' => $data->id]);
             }, (new AreaChartModel())
                 ->setTitle('Expenses Peaks')
                 ->setAnimated($this->firstRun)
                 ->setColor('#f6ad55')
                 ->withOnPointClickEvent('onAreaPointClick')
                 ->setDataLabelsEnabled($this->showDataLabels)
-                ->setXAxisVisible(false)
+                ->setXAxisVisible(true)
             );
 
         $multiLineChartModel = $expenses
             ->reduce(function (LineChartModel $multiLineChartModel, $data) use ($expenses) {
+                $index = $expenses->search($data);
+
                 return $multiLineChartModel
-                    ->addSeriesPoint($data->type, $data->description, $data->amount,  ['id' => $data->id]);
+                    ->addSeriesPoint($data->type, $index, $data->amount,  ['id' => $data->id]);
             }, (new LineChartModel())
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
@@ -126,6 +129,18 @@ class Dashboard extends Component
                 ->setSmoothCurve()
                 ->multiLine()
                 ->setDataLabelsEnabled($this->showDataLabels)
+            );
+
+        $multiColumnChartModel = $expenses->groupBy('type')
+            ->reduce(function (ColumnChartModel $multiColumnChartModel, $data) use ($expenses) {
+                return $multiColumnChartModel
+                    ->addSeriesColumn($data->first()->type, 1, $data->sum('amount'));
+            }, (new ColumnChartModel())
+                ->multiColumn()
+                ->setAnimated($this->firstRun)
+                ->setDataLabelsEnabled($this->showDataLabels)
+                ->withOnColumnClickEventName('onColumnClick')
+                ->setTitle('Revenue per Year (K)')
             );
 
         $this->firstRun = false;
@@ -137,6 +152,7 @@ class Dashboard extends Component
                 'lineChartModel' => $lineChartModel,
                 'areaChartModel' => $areaChartModel,
                 'multiLineChartModel' => $multiLineChartModel,
+                'multiColumnChartModel' => $multiColumnChartModel,
             ]);
     }
 }

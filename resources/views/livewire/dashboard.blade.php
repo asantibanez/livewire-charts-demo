@@ -66,5 +66,12 @@
                 :line-chart-model="$multiLineChartModel"
             />
         </div>
+
+        <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
+            <livewire:livewire-column-chart
+                key="{{ $multiColumnChartModel->reactiveKey() }}"
+                :column-chart-model="$multiColumnChartModel"
+            />
+        </div>
     </div>
 </div>
