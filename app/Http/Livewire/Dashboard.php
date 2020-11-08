@@ -141,6 +141,7 @@ class Dashboard extends Component
                 ->setDataLabelsEnabled($this->showDataLabels)
                 ->withOnColumnClickEventName('onColumnClick')
                 ->setTitle('Revenue per Year (K)')
+                //->stacked()
             );
 
         $this->firstRun = false;
