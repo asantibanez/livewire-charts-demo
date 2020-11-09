@@ -3,10 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Expense;
-use Asantibanez\LivewireCharts\Models\AreaChartModel;
-use Asantibanez\LivewireCharts\Models\ColumnChartModel;
-use Asantibanez\LivewireCharts\Models\LineChartModel;
-use Asantibanez\LivewireCharts\Models\PieChartModel;
+use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -51,12 +48,12 @@ class Dashboard extends Component
         $expenses = Expense::whereIn('type', $this->types)->get();
 
         $columnChartModel = $expenses->groupBy('type')
-            ->reduce(function (ColumnChartModel $columnChartModel, $data) {
+            ->reduce(function ($columnChartModel, $data) {
                 $type = $data->first()->type;
                 $value = $data->sum('amount');
 
                 return $columnChartModel->addColumn($type, $value, $this->colors[$type]);
-            }, (new ColumnChartModel())
+            }, LivewireCharts::columnChart()
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
                 ->withOnColumnClickEventName('onColumnClick')
@@ -65,12 +62,12 @@ class Dashboard extends Component
             );
 
         $pieChartModel = $expenses->groupBy('type')
-            ->reduce(function (PieChartModel $pieChartModel, $data) {
+            ->reduce(function ($pieChartModel, $data) {
                 $type = $data->first()->type;
                 $value = $data->sum('amount');
 
                 return $pieChartModel->addSlice($type, $value, $this->colors[$type]);
-            }, (new PieChartModel())
+            }, LivewireCharts::pieChart()
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
                 ->withOnSliceClickEvent('onSliceClick')
@@ -80,7 +77,7 @@ class Dashboard extends Component
             );
 
         $lineChartModel = $expenses
-            ->reduce(function (LineChartModel $lineChartModel, $data) use ($expenses) {
+            ->reduce(function ($lineChartModel, $data) use ($expenses) {
                 $index = $expenses->search($data);
 
                 $amountSum = $expenses->take($index + 1)->sum('amount');
@@ -94,7 +91,7 @@ class Dashboard extends Component
                 }
 
                 return $lineChartModel->addPoint($index, $data->amount, ['id' => $data->id]);
-            }, (new LineChartModel())
+            }, LivewireCharts::lineChart()
                 ->setTitle('Expenses Evolution')
                 ->setAnimated($this->firstRun)
                 ->withOnPointClickEvent('onPointClick')
@@ -104,10 +101,10 @@ class Dashboard extends Component
             );
 
         $areaChartModel = $expenses
-            ->reduce(function (AreaChartModel $areaChartModel, $data) use ($expenses) {
+            ->reduce(function ($areaChartModel, $data) use ($expenses) {
                 $index = $expenses->search($data);
                 return $areaChartModel->addPoint($index, $data->amount, ['id' => $data->id]);
-            }, (new AreaChartModel())
+            }, LivewireCharts::areaChart()
                 ->setTitle('Expenses Peaks')
                 ->setAnimated($this->firstRun)
                 ->setColor('#f6ad55')
@@ -117,12 +114,12 @@ class Dashboard extends Component
             );
 
         $multiLineChartModel = $expenses
-            ->reduce(function (LineChartModel $multiLineChartModel, $data) use ($expenses) {
+            ->reduce(function ($multiLineChartModel, $data) use ($expenses) {
                 $index = $expenses->search($data);
 
                 return $multiLineChartModel
                     ->addSeriesPoint($data->type, $index, $data->amount,  ['id' => $data->id]);
-            }, (new LineChartModel())
+            }, LivewireCharts::multiLineChart()
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
                 ->withOnPointClickEvent('onPointClick')
@@ -132,16 +129,15 @@ class Dashboard extends Component
             );
 
         $multiColumnChartModel = $expenses->groupBy('type')
-            ->reduce(function (ColumnChartModel $multiColumnChartModel, $data) use ($expenses) {
+            ->reduce(function ($multiColumnChartModel, $data) use ($expenses) {
                 return $multiColumnChartModel
                     ->addSeriesColumn($data->first()->type, 1, $data->sum('amount'));
-            }, (new ColumnChartModel())
-                ->multiColumn()
+            }, LivewireCharts::multiColumnChart()
                 ->setAnimated($this->firstRun)
                 ->setDataLabelsEnabled($this->showDataLabels)
                 ->withOnColumnClickEventName('onColumnClick')
                 ->setTitle('Revenue per Year (K)')
-                //->stacked()
+                ->stacked()
             );
 
         $this->firstRun = false;
