@@ -4,20 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7da43ea466ee27eaca6089b0865a2c5",
+    "content-hash": "e6f41302d8e0b6e52f0424ebefc276aa",
     "packages": [
         {
             "name": "asantibanez/livewire-charts",
-            "version": "dev-master",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/asantibanez/livewire-charts.git",
+                "reference": "582ad340ddf0d138df67319073886f9314cccd0a"
+            },
             "dist": {
-                "type": "path",
-                "url": "../../packages/livewire-charts",
-                "reference": "dbbbf8eca25ea8e904b668d2dbf60c9f8a88e3a9"
+                "type": "zip",
+                "url": "https://api.github.com/repos/asantibanez/livewire-charts/zipball/582ad340ddf0d138df67319073886f9314cccd0a",
+                "reference": "582ad340ddf0d138df67319073886f9314cccd0a",
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "^7.0|^8.0",
                 "livewire/livewire": "^2.3",
-                "php": "^7.2|^7.3|^7.4"
+                "php": "^7.2|^7.3|^7.4|^8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^4.0|^5.0",
@@ -39,19 +45,7 @@
                     "Asantibanez\\LivewireCharts\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Asantibanez\\LivewireCharts\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -68,9 +62,11 @@
                 "asantibanez",
                 "livewire-charts"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/asantibanez/livewire-charts/issues",
+                "source": "https://github.com/asantibanez/livewire-charts/tree/v2.3.0"
+            },
+            "time": "2021-02-12T05:29:24+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -7394,9 +7390,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "asantibanez/livewire-charts": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
