@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class ExpenseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -13,8 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            ExpenseSeeder::class,
-        ]);
+        \App\Models\Expense::factory(10)->create();
     }
 }
