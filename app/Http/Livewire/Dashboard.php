@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Expense;
+use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
+use Asantibanez\LivewireCharts\Models\RadarChartModel;
+use Asantibanez\LivewireCharts\Models\TreeMapChartModel;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -27,6 +30,7 @@ class Dashboard extends Component
         'onPointClick' => 'handleOnPointClick',
         'onSliceClick' => 'handleOnSliceClick',
         'onColumnClick' => 'handleOnColumnClick',
+        'onBlockClick' => 'handleOnBlockClick',
     ];
 
     public function handleOnPointClick($point)
@@ -42,6 +46,11 @@ class Dashboard extends Component
     public function handleOnColumnClick($column)
     {
         dd($column);
+    }
+
+    public function handleOnBlockClick($block)
+    {
+        dd($block);
     }
 
     public function render()
@@ -69,6 +78,7 @@ class Dashboard extends Component
             }, (new PieChartModel())
                 ->setTitle('Expenses by Type')
                 ->setAnimated($this->firstRun)
+                ->setType('donut')
                 ->withOnSliceClickEvent('onSliceClick')
             );
 
@@ -105,6 +115,26 @@ class Dashboard extends Component
                 ->setYAxisVisible(true)
             );
 
+        $radarChartModel = $expenses
+            ->reduce(function (RadarChartModel $radarChartModel, $data) use ($expenses) {
+                return $radarChartModel->addSeries($data->first()->type, $data->description, $data->amount);
+            }, LivewireCharts::radarChartModel()
+                ->setAnimated($this->firstRun)
+            );
+
+        $treeChartModel = $expenses->groupBy('type')
+            ->reduce(function (TreeMapChartModel $chartModel, $data) {
+                $type = $data->first()->type;
+                $value = $data->sum('amount');
+
+                return $chartModel->addBlock($type, $value)->addColor($this->colors[$type]);
+            }, LivewireCharts::treeMapChartModel()
+                ->setTitle('Expenses Weight')
+                ->setAnimated($this->firstRun)
+                ->setDistributed(true)
+                ->withOnBlockClickEvent('onBlockClick')
+            );
+
         $this->firstRun = false;
 
         return view('livewire.dashboard')
@@ -113,6 +143,8 @@ class Dashboard extends Component
                 'pieChartModel' => $pieChartModel,
                 'lineChartModel' => $lineChartModel,
                 'areaChartModel' => $areaChartModel,
+                'radarChartModel' => $radarChartModel,
+                'treeChartModel' => $treeChartModel,
             ]);
     }
 }

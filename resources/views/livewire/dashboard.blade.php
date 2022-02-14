@@ -51,4 +51,18 @@
             :area-chart-model="$areaChartModel"
         />
     </div>
+
+    <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
+        <livewire:livewire-radar-chart
+            key="{{ $radarChartModel->reactiveKey() }}"
+            :radar-chart-model="$radarChartModel"
+        />
+    </div>
+
+    <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
+        <livewire:livewire-tree-map-chart
+            key="{{ $treeChartModel->reactiveKey() }}"
+            :tree-map-chart-model="$treeChartModel"
+        />
+    </div>
 </div>
