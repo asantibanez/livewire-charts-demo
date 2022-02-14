@@ -10,7 +10,7 @@
 
     <livewire:styles />
 </head>
-<body class="bg-gray-200 p-8">
+<body class="bg-gray-200">
 
 <livewire:dashboard/>
 
@@ -18,7 +18,7 @@
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
 
-<script src="{{ asset('vendor/livewire-charts/app.js') }}"></script>
+@livewireChartsScripts
 
 </body>
 </html>
